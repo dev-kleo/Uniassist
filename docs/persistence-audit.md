@@ -2,7 +2,7 @@
 
 ## Summary
 
-UniAssist currently persists all production data on the local filesystem under `data/`. Phase 10 adds Appwrite-backed implementations behind the same interfaces while preserving local mode for development and tests.
+ASKIO currently persists all production data on the local filesystem under `data/`. Phase 10 adds Appwrite-backed implementations behind the same interfaces while preserving local mode for development and tests.
 
 ## Persistence touchpoints
 

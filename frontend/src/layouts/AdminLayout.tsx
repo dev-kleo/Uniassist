@@ -16,7 +16,7 @@ export function AdminLayout() {
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
           <div>
             <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
-              UniAssist
+              ASKIO
             </p>
             <h1 className="text-lg font-semibold">Admin</h1>
           </div>

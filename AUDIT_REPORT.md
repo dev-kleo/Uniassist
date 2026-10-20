@@ -1,4 +1,4 @@
-# UniAssist: Research-Readiness Audit
+# ASKIO: Research-Readiness Audit
 
 Scope: read-only audit of this repository to judge whether it can support a research evaluation report. The only file written is this one. I did not call Groq, Telegram or Appwrite, and I did not touch `.env` or secrets.
 

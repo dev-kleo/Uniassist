@@ -1,12 +1,12 @@
-# UniAssist
+# ASKIO
 
-UniAssist is a university knowledge assistant built on a **controlled, verified document corpus**. Administrators manually upload authoritative university documents; the system preserves provenance and verification state so answers can be grounded in trusted evidence.
+ASKIO is a university knowledge assistant built on a **controlled, verified document corpus**. Administrators manually upload authoritative university documents; the system preserves provenance and verification state so answers can be grounded in trusted evidence.
 
-UniAssist v1 does **not** depend on website crawling.
+ASKIO v1 does **not** depend on website crawling.
 
 ## Product vision
 
-The goal is not to crawl everything and let AI decide what matters. The goal is to give UniAssist a curated set of authoritative documents and make the AI answer only from verified evidence.
+The goal is not to crawl everything and let AI decide what matters. The goal is to give ASKIO a curated set of authoritative documents and make the AI answer only from verified evidence.
 
 ## Architecture (v1)
 
@@ -30,7 +30,7 @@ flowchart TD
 
 ### Future optional acquisition path
 
-ScrapeAI remains in the repository as a **reusable, optional** acquisition component. It is not part of UniAssist v1.
+ScrapeAI remains in the repository as a **reusable, optional** acquisition component. It is not part of ASKIO v1.
 
 ```mermaid
 flowchart LR
@@ -39,7 +39,7 @@ flowchart LR
     ScrapeAI -.->|future phase| Ingestion
 ```
 
-**UniAssist v1 does not crawl the SUSU website.**
+**ASKIO v1 does not crawl the SUSU website.**
 
 ## Document lifecycle
 
@@ -59,12 +59,12 @@ New uploads default to `draft` + `pending`. A document becomes `active` only thr
 
 ## What is ScrapeAI?
 
-ScrapeAI ([`src/uniassist/scrapeai/`](src/uniassist/scrapeai/)) is a reusable Scrapy-based acquisition engine. It is **frozen** and optional — useful for future projects or controlled single-page imports, but not required for UniAssist v1.
+ScrapeAI ([`src/uniassist/scrapeai/`](src/uniassist/scrapeai/)) is a reusable Scrapy-based acquisition engine. It is **frozen** and optional — useful for future projects or controlled single-page imports, but not required for ASKIO v1.
 
 ## Directory layout
 
 ```
-Uniassist/
+ASKIO/
 ├── configs/susu/              # frozen SUSU connector config (optional acquisition)
 ├── data/
 │   ├── raw/                   # immutable uploaded document blobs
@@ -167,11 +167,11 @@ python -m uniassist.processing.cli list
 
 | Source type | Processor | Notes |
 |-------------|-----------|-------|
-| PDF | MinerU | Requires MinerU (Python 3.10-3.13). Set `MINERU_EXECUTABLE` to an isolated CLI when UniAssist uses Python 3.14+. |
+| PDF | MinerU | Requires MinerU (Python 3.10-3.13). Set `MINERU_EXECUTABLE` to an isolated CLI when ASKIO uses Python 3.14+. |
 | TXT | TextProcessor | Direct UTF-8 extraction, no MinerU |
 | DOCX | DocxTextProcessor | Built-in paragraph extraction (no MinerU needed); MinerU is used when it advertises DOCX support |
 
-For a Python 3.14 UniAssist environment, keep MinerU isolated and configure it
+For a Python 3.14 ASKIO environment, keep MinerU isolated and configure it
 without activating that environment for each run:
 
 ```bash
@@ -292,7 +292,7 @@ python -m uniassist.rag.cli rebuild
 python -m uniassist.rag.cli search "academic leave" --min-score 0.35
 ```
 
-**Refusal behavior**: UniAssist refuses when there is no relevant evidence, claims are unsupported, citations are invalid, or evidence conflicts across active documents. Out-of-domain questions must not be answered from model knowledge alone.
+**Refusal behavior**: ASKIO refuses when there is no relevant evidence, claims are unsupported, citations are invalid, or evidence conflicts across active documents. Out-of-domain questions must not be answered from model knowledge alone.
 
 **Groq integration test** (optional, not part of normal CI):
 
@@ -304,7 +304,7 @@ pytest tests/e2e/test_real_fastapi_e2e.py -v
 
 ### REST API (Phase 7)
 
-Phase 7 exposes UniAssist through a thin FastAPI application layer. Routes delegate to existing services — no business logic is duplicated in the API package.
+Phase 7 exposes ASKIO through a thin FastAPI application layer. Routes delegate to existing services — no business logic is duplicated in the API package.
 
 Start the development server (port 8001 is used everywhere in this README, including by the Telegram bot):
 
@@ -412,13 +412,13 @@ npm test
 
 ### Groq + Telegram end-to-end
 
-UniAssist uses Groq for chat generation and local hash embeddings for retrieval. It does not download models or install GPU software.
+ASKIO uses Groq for chat generation and local hash embeddings for retrieval. It does not download models or install GPU software.
 
 **Port layout (avoid conflicts)**
 
 | Service | URL |
 | --- | --- |
-| UniAssist FastAPI | `http://127.0.0.1:8001` |
+| ASKIO FastAPI | `http://127.0.0.1:8001` |
 | React admin (optional) | `http://localhost:5173` |
 
 **1. Configure environment**
@@ -436,7 +436,7 @@ UNIASSIST_CORS_ORIGINS=http://localhost:5173,http://127.0.0.1:5173
 
 **2. Run the local stack**
 
-Terminal 1 — UniAssist API:
+Terminal 1 — ASKIO API:
 
 ```bash
 export UNIASSIST_CORS_ORIGINS=http://localhost:5173,http://127.0.0.1:5173
@@ -531,7 +531,7 @@ Future channels (for example MAX in Phase 10) should reuse the same `/ask` contr
 | Variable | Description |
 | --- | --- |
 | `TELEGRAM_BOT_TOKEN` | Telegram bot token (required to run the bot) |
-| `UNIASSIST_API_URL` | Base URL for UniAssist API (example: `http://127.0.0.1:8001`) |
+| `UNIASSIST_API_URL` | Base URL for ASKIO API (example: `http://127.0.0.1:8001`) |
 | `TELEGRAM_RATE_LIMIT_PER_MINUTE` | Per-user in-memory rate limit (default: 10) |
 | `TELEGRAM_REQUEST_TIMEOUT_SECONDS` | FastAPI client timeout (default: 60) |
 | `TELEGRAM_NETWORK_TIMEOUT_SECONDS` | Telegram connection/read/write timeout (default: 30) |
@@ -561,7 +561,7 @@ python -m uniassist.telegram.bot
 
 - `/start` — welcome message
 - `/help` — usage and safety guidance
-- `/status` — UniAssist online/offline via `/health`
+- `/status` — ASKIO online/offline via `/health`
 - normal text — grounded question answering via `/ask`
 
 **Rate limiting and privacy**
@@ -600,7 +600,7 @@ Webhooks, Redis, and student document uploads are intentionally out of scope for
 
 ### Phase 10 — Appwrite Cloud persistence
 
-UniAssist can run with local filesystem persistence (default) or Appwrite Cloud for production.
+ASKIO can run with local filesystem persistence (default) or Appwrite Cloud for production.
 
 **Backend selection**
 

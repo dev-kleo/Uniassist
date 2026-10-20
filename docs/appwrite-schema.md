@@ -1,4 +1,4 @@
-# Appwrite schema for UniAssist
+# Appwrite schema for ASKIO
 
 This document describes the Appwrite Database attributes required by Phase 10 persistence code. Create these attributes on the existing `uniassist` database tables. Do not delete or recreate the tables.
 
@@ -10,7 +10,7 @@ python -m uniassist.persistence.appwrite_setup
 
 ## `documents` table
 
-| Column | Appwrite type | Required | Size | Array | Why UniAssist needs it |
+| Column | Appwrite type | Required | Size | Array | Why ASKIO needs it |
 |--------|---------------|----------|------|-------|------------------------|
 | `document_id` | string | yes | 64 | no | Primary business identifier for corpus records |
 | `title` | string | no | 512 | no | Admin-visible document title |
@@ -32,7 +32,7 @@ python -m uniassist.persistence.appwrite_setup
 
 ## `processing` table
 
-| Column | Appwrite type | Required | Size | Array | Why UniAssist needs it |
+| Column | Appwrite type | Required | Size | Array | Why ASKIO needs it |
 |--------|---------------|----------|------|-------|------------------------|
 | `document_id` | string | yes | 64 | no | Foreign key to document |
 | `status` | string | yes | 32 | no | Processing lifecycle state |
@@ -50,7 +50,7 @@ Normalized JSON artifacts themselves are stored in the `processed` Storage bucke
 
 ## `chunks` table
 
-| Column | Appwrite type | Required | Size | Array | Why UniAssist needs it |
+| Column | Appwrite type | Required | Size | Array | Why ASKIO needs it |
 |--------|---------------|----------|------|-------|------------------------|
 | `chunk_id` | string | yes | 64 | no | Unique chunk identifier |
 | `document_id` | string | yes | 64 | no | Source document for retrieval filtering |

@@ -1,6 +1,6 @@
-# Appwrite Cloud setup for UniAssist
+# Appwrite Cloud setup for ASKIO
 
-UniAssist can persist documents, processing metadata, and RAG indexes locally (default) or in Appwrite Cloud.
+ASKIO can persist documents, processing metadata, and RAG indexes locally (default) or in Appwrite Cloud.
 
 ## 1. Create an Appwrite project
 
